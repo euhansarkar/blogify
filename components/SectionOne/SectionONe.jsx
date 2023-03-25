@@ -1,22 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import Author from "../_Child/Author/Author";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, {Autoplay} from 'swiper';
+// Import Swiper styles
+import "swiper/css";
 
 const SectionONe = () => {
 
-    const bg = {
-        background: "url('/images/banner.png') no-repeat",
-        backgroundPosition: "right",
-    }
+    SwiperCore.use([Autoplay])
 
-    console.log(bg);
+  const bg = {
+    background: "url('/images/banner.png') no-repeat",
+    backgroundPosition: "right",
+  };
 
   return (
     <>
       <section className="py-16" style={bg}>
         <div className="container mx-auto md:px-20">
           <h1 className="font-bold text-4xl pb-12 text-center">trending</h1>
-          {Slide()}
+
+          <Swiper
+            spaceBetween={50}
+            loop={true}
+            slidesPerView={1}
+            autoplay={{
+                delay: 2000
+            }}
+          >
+            <SwiperSlide>{Slide()}</SwiperSlide>
+            <SwiperSlide>{Slide()}</SwiperSlide>
+            <SwiperSlide>{Slide()}</SwiperSlide>
+            <SwiperSlide>{Slide()}</SwiperSlide>
+            <SwiperSlide>{Slide()}</SwiperSlide>
+          </Swiper>
+
+          
         </div>
       </section>
     </>
@@ -59,7 +79,7 @@ function Slide() {
             blind text by the name of Lorem Ipsum decided to leave for the far
             World of Grammar.
           </p>
-          <Author/>
+          <Author />
         </div>
       </div>
     </>
