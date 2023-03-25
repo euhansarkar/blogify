@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Layout from "../../Layout/Layout";
 import SectionONe from "../../components/SectionOne/SectionONe";
+import SectionTWo from "../../components/SectionTWo/SectionTWo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,6 +12,7 @@ export default function Home() {
   return <>
     <Layout>
     <SectionONe/>
+    <SectionTWo/>
     </Layout>
   </>;
 }
