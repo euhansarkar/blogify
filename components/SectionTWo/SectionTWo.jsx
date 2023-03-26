@@ -4,12 +4,14 @@ import React from "react";
 import Fetcher from "../../lib/fetcher";
 import getPosts from "../../lib/helper";
 import Author from "../_Child/Author/Author";
-
+import Error from "../_Child/Error/Error";
+import Spinner from "../_Child/Spinner/Spinner";
 
 const SectionTWo = () => {
+  const { data, isLoading, isError } = Fetcher(`/api/posts`);
 
-  const {data, isLoading, isError} = Fetcher(`/api/posts`);
-  if(data) return console.log(data);
+  if(isLoading) return <Spinner/>
+  if(isError) return <Error/>
 
   return (
     <>
@@ -18,26 +20,23 @@ const SectionTWo = () => {
           latest posts
         </h1>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14">
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
+          {data?.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
         </div>
       </section>
     </>
   );
 };
 
-function Post() {
-  
+function Post({ post }) {
+  const { id, img, category, title, subtitle, published, author } = post;
   return (
     <>
       <div className="item">
         <div className="images">
           <Image
-            src={`/images/img1.jpg`}
+            src={img || `img not found`}
             width={500}
             height={350}
             className="rounded"
@@ -47,28 +46,22 @@ function Post() {
         <div className="info flex justify-center flex-col py-2">
           <div className="category flex gap-2">
             <Link href={`/`} className="text-orange-600 hover:text-orange-800">
-              business travel
+              {category}
             </Link>
             <Link href={`/`} className="text-gray-600 hover:text-gray-800">
-              Mar 26, 2023
+              {published || `unknown`}
             </Link>
           </div>
           <div className="title">
             <Link
-              href={`/`}
+              href={`/Posts/${id}`}
               className="text-xl capitalize font-bold text-gray-800 hover:text-gray-600"
             >
-              your most unhappy customers are your greatest source of learning
+              {title || `unknown`}
             </Link>
           </div>
-          <p className="text-gray-500 py-1">
-            {" "}
-            Even the all-powerful Pointing has no control about the blind texts
-            it is an almost unorthographic life One day however a small line of
-            blind text by the name of Lorem Ipsum decided to leave for the far
-            World of Grammar.
-          </p>
-          <Author />
+          <p className="text-gray-500 py-1">{subtitle || `unpublished`}</p>
+          {author && <Author author={author} />}
         </div>
       </div>
     </>

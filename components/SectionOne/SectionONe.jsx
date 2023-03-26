@@ -1,20 +1,27 @@
+import "swiper/css";
 import Image from "next/image";
 import Link from "next/link";
 import Author from "../_Child/Author/Author";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, {Autoplay} from 'swiper';
-// Import Swiper styles
-import "swiper/css";
+import SwiperCore, { Autoplay } from "swiper";
+import Error from "../_Child/Error/Error";
+import Spinner from "../_Child/Spinner/Spinner";
+import Fetcher from "../../lib/fetcher";
 
 const SectionONe = () => {
-
-    SwiperCore.use([Autoplay])
+  const { data, isLoading, isError } = Fetcher(`/api/trending`);
+  if (isLoading) return <Spinner />;
+  if (isError) return <Error />;
+  SwiperCore.use([Autoplay]);
 
   const bg = {
     background: "url('/images/banner.png') no-repeat",
     backgroundPosition: "right",
   };
 
+  
+
+ 
   return (
     <>
       <section className="py-16" style={bg}>
@@ -26,60 +33,51 @@ const SectionONe = () => {
             loop={true}
             slidesPerView={1}
             autoplay={{
-                delay: 2000
+              delay: 2000,
             }}
           >
-            <SwiperSlide>{Slide()}</SwiperSlide>
-            <SwiperSlide>{Slide()}</SwiperSlide>
-            <SwiperSlide>{Slide()}</SwiperSlide>
-            <SwiperSlide>{Slide()}</SwiperSlide>
-            <SwiperSlide>{Slide()}</SwiperSlide>
+            {data?.Trending?.map((trend) => (
+              <SwiperSlide key={trend.id}>
+                <Slide trend={trend} />
+              </SwiperSlide>
+            ))}
           </Swiper>
-
-          
         </div>
       </section>
     </>
   );
 };
 
-function Slide() {
+export function Slide({ trend }) {
+  const { id, img, title, subtitle, author, published, category } =
+    trend;
   return (
     <>
       <div className="grid md:grid-cols-2 gap-20">
         <div className="image">
-          <Image
-            src={"/images/img1.jpg"}
-            alt="blog image"
-            width={600}
-            height={600}
-          />
+          <Link href={`/Posts/${id}`}>
+          <Image src={img} alt="blog image" width={600} height={600} />
+          </Link>
         </div>
         <div className="info flex justify-center flex-col">
           <div className="category flex gap-3">
             <Link href={`/`} className="text-orange-600 hover:text-orange-800">
-              business travel
+              {category}
             </Link>
             <Link href={`/`} className="text-gray-600 hover:text-gray-800">
-              Mar 26, 2023
+              {published}
             </Link>
           </div>
           <div className="title">
             <Link
-              href={`/`}
+              href={`/Posts/${id}`}
               className="text-3xl md:text-5xl capitalize font-bold text-gray-800 hover:text-gray-600"
             >
-              your most unhappy customers are your greatest source of learning
+              {title}
             </Link>
           </div>
-          <p className="text-gray-500 py-3">
-            {" "}
-            Even the all-powerful Pointing has no control about the blind texts
-            it is an almost unorthographic life One day however a small line of
-            blind text by the name of Lorem Ipsum decided to leave for the far
-            World of Grammar.
-          </p>
-          <Author />
+          <p className="text-gray-500 py-3">{subtitle}</p>
+          {author && <Author author={author} />}
         </div>
       </div>
     </>
