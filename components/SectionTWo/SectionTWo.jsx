@@ -1,9 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Fetcher from "../../lib/fetcher";
+import getPosts from "../../lib/helper";
 import Author from "../_Child/Author/Author";
 
+
 const SectionTWo = () => {
+
+  const {data, isLoading, isError} = Fetcher(`/api/posts`);
+  if(data) return console.log(data);
+
   return (
     <>
       <section className="container mx-auto md:px-20 py-10">
@@ -24,6 +31,7 @@ const SectionTWo = () => {
 };
 
 function Post() {
+  
   return (
     <>
       <div className="item">
