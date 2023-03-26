@@ -2,34 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import Author from "../_Child/Author/Author";
 
-const SectionFour = () => {
+const Related = () => {
   return (
-    <>
-      <section className="container mx-auto md:px-20 py-16">
-        <div className="grid lg:grid-cols-2">
-          <div className="item">
-            <h1 className="capitalize font-bold text-4xl py-12">business</h1>
-
-            <div className="flex flex-col gap-6">
-              {Post()}
-              {Post()}
-              {Post()}
-              {Post()}
-            </div>
-          </div>
-          <div className="item">
-            <h1 className="capitalize font-bold text-4xl py-12">travel</h1>
-
-            <div className="flex flex-col gap-6">
-              {Post()}
-              {Post()}
-              {Post()}
-              {Post()}
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+    <section className="pt-20">
+      <h1 className="font-bold text-4xl pb-12 text-center">related contents</h1>
+      <div className="flex flex-col gap-10">
+        {Post()}
+        {Post()}
+        {Post()}
+        {Post()}
+      </div>
+    </section>
   );
 };
 
@@ -41,7 +24,7 @@ function Post() {
           <Image
             src={`/images/img1.jpg`}
             width={300}
-            height={250}
+            height={200}
             className="rounded"
             alt="post image"
           />
@@ -62,4 +45,4 @@ function Post() {
   );
 }
 
-export default SectionFour;
+export default Related;

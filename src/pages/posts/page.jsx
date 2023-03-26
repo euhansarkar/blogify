@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Related from "../../../components/Related/Related";
 import Author from "../../../components/_Child/Author/Author";
 import Layout from "../../../Layout/Layout";
 
@@ -53,6 +54,7 @@ const page = () => {
             aliquid odio expedita voluptatum et similique?
           </div>
         </div>
+        <Related/>
       </section>
     </Layout>
   );

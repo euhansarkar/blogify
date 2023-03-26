@@ -1,0 +1,7 @@
+
+
+// api endpoint
+//api/trending
+
+
+
