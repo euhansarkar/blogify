@@ -23,7 +23,7 @@ const SectionTHRee = () => {
   );
 };
 
-function Post() {
+function Post() { 
   return (
     <>
       <div className="grid mx-12">
